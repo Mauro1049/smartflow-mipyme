@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
 
 const app = express();
 
@@ -12,11 +13,19 @@ app.use(express.json());
 const clientesRoutes = require('./modules/clientes/clientes.routes');
 const productosRoutes = require('./modules/productos/productos.routes');
 const ventasRoutes = require('./modules/ventas/ventas.routes');
+const dashboardRoutes = require('./modules/dashboard/dashboard.routes');
+const authRoutes = require('./modules/auth/auth.routes');
+const verificarToken = require('./modules/auth/auth.middleware');
 
-app.use('/api/ventas', ventasRoutes);
+app.use('/api/auth', authRoutes);
 
+app.use('/api/dashboard', dashboardRoutes);
 
-app.use('/api/productos', productosRoutes);
+app.use('/api/ventas', verificarToken, ventasRoutes);
+
+app.use('/api/productos', verificarToken, productosRoutes);
+
+app.use('/api/clientes', clientesRoutes);
 
 // 🔹 Ruta base
 app.get('/', (req, res) => {
@@ -24,7 +33,6 @@ app.get('/', (req, res) => {
 });
 
 // 🔹 Rutas de clientes
-app.use('/api/clientes', clientesRoutes);
 
 // 🔹 Puerto
 const PORT = process.env.PORT || 3000;
