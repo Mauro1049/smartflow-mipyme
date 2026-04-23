@@ -27,6 +27,8 @@ app.use('/api/productos', verificarToken, productosRoutes);
 
 app.use('/api/clientes', clientesRoutes);
 
+app.use('/api/dashboard', dashboardRoutes);
+
 // 🔹 Ruta base
 app.get('/', (req, res) => {
   res.send('API SmartFlow funcionando 🚀');
