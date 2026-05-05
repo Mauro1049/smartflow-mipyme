@@ -16,6 +16,9 @@ const ventasRoutes = require('./modules/ventas/ventas.routes');
 const dashboardRoutes = require('./modules/dashboard/dashboard.routes');
 const authRoutes = require('./modules/auth/auth.routes');
 const verificarToken = require('./modules/auth/auth.middleware');
+const usuariosRoutes = require('./modules/users/users.routes');
+
+app.use('/api/users', usuariosRoutes);
 
 app.use('/api/auth', authRoutes);
 
